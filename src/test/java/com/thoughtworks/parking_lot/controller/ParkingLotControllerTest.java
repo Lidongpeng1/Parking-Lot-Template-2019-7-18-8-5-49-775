@@ -57,5 +57,22 @@ class ParkingLotControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.location", Matchers.is(parkingLot.getLocation())));
     }
 
+    @Test
+    void should_delete_a_parking_lot_by_name_normally() throws Exception {
+        ParkingLot parkingLot = new ParkingLot();
+        parkingLot.setName("Hello");
+        parkingLot.setCapacity(1);
+        parkingLot.setLocation("World");
 
+        mvc.perform(
+                MockMvcRequestBuilders.post("/parkinglots")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(objectMapper.writeValueAsString(parkingLot))
+        );
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders.delete("/parkinglots/{name}", parkingLot.getName())
+        );
+
+        result.andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
 }
