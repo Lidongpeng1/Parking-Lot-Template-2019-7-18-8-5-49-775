@@ -3,3 +3,6 @@ CREATE TABLE `parking_lot` (
     `capacity` INT DEFAULT 0 CHECK(`capacity` >= 0),
     `location` VARCHAR(255)
 );
+
+
+

@@ -31,4 +31,10 @@ public class ParkingLotController {
                 .map(parkingLot -> ResponseEntity.noContent().build())
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
+
+    @GetMapping("/{parkingLotName}")
+    public ResponseEntity getParkingLotByID(@PathVariable("parkingLotName") String name) {
+        ParkingLot parkingLot=parkingLotService.findParkingLotByID(name);
+        return ResponseEntity.ok().body(parkingLot);
+    }
 }
