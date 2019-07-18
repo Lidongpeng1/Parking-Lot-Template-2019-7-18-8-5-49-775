@@ -38,4 +38,9 @@ public class ParkingLotService {
 
     }
 
+    public ParkingLot changeParkingLot(ParkingLot parkingLot) {
+        ParkingLot parkingLot1 = parkingLotRepository.saveAndFlush(parkingLot);
+        return parkingLot1;
+    }
+
 }
