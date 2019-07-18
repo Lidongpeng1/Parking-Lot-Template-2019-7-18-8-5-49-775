@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(path = "/parkinglots")
 public class ParkingLotController {
@@ -15,6 +17,12 @@ public class ParkingLotController {
     @PostMapping()
     public ParkingLot create(@RequestBody ParkingLot parkingLot) {
         return parkingLotService.create(parkingLot);
+    }
+
+    @GetMapping(params = {"page","pageSize"})
+    public ResponseEntity getParkingLotByPage(@RequestParam("page")String page,@RequestParam("pageSize")String pageSize) {
+        List<ParkingLot> parkingLots=parkingLotService.getParkingLotByPage(page,pageSize);
+        return ResponseEntity.ok().body(parkingLots);
     }
 
     @DeleteMapping(path = "/{parkingLotName}")
