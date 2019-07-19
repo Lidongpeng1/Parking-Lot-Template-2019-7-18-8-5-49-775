@@ -156,5 +156,4 @@ class ParkingLotControllerTest {
         Assertions.assertEquals("pa1",jsonObject.getString("name"));
 
     }
-    }
 }
