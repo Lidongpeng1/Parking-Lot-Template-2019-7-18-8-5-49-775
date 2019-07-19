@@ -1,1 +1,0 @@
---ALTER TABLE prosecutor add CONSTRAINT capicity check(capicity>0);
