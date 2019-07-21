@@ -6,7 +6,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "parking_lot")
-public class ParkingLot{
+public class ParkingLot {
     @Id
     private String name;
 
@@ -38,4 +38,3 @@ public class ParkingLot{
         this.location = location;
     }
 }
-
