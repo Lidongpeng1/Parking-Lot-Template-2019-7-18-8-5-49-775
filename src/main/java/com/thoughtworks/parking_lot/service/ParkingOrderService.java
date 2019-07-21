@@ -1,5 +1,6 @@
 package com.thoughtworks.parking_lot.service;
 
+import com.thoughtworks.parking_lot.exception.NoPositionException;
 import com.thoughtworks.parking_lot.model.ParkingOrder;
 import com.thoughtworks.parking_lot.repository.ParkingLotRepository;
 import com.thoughtworks.parking_lot.repository.ParkingOrderRepository;
@@ -27,7 +28,7 @@ public class ParkingOrderService {
                     parkingOrder.setStatus(true);
                     return parkingOrderRepository.save(parkingOrder);
                 })
-                .orElse(null);
+                .orElseThrow(NoPositionException::new);
     }
 
     public Optional<ParkingOrder> fetchCar(String parkingLotName, String carNumber) {
