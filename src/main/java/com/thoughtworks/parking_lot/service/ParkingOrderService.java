@@ -17,7 +17,7 @@ public class ParkingOrderService {
     @Autowired
     private ParkingLotRepository parkingLotRepository;
 
-    public ParkingOrder createOrder(String parkingLotName, ParkingOrder parkingOrder){
+    public ParkingOrder createOrder(String parkingLotName, ParkingOrder parkingOrder) {
         return parkingLotRepository.findById(parkingLotName)
                 .filter(parkingLot -> parkingOrderRepository.countByParkingLotName(parkingLotName) <
                         parkingLot.getCapacity())
@@ -28,5 +28,17 @@ public class ParkingOrderService {
                     return parkingOrderRepository.save(parkingOrder);
                 })
                 .orElse(null);
+    }
+
+    public Optional<ParkingOrder> fetchCar(String parkingLotName, String carNumber) {
+        List<ParkingOrder> parkingOrders = parkingOrderRepository.findByParkingLotNameAndCarNumberAndStatus(
+                parkingLotName, carNumber, true);
+        if (!parkingOrders.isEmpty()) {
+            ParkingOrder parkingOrder = parkingOrders.get(0);
+            parkingOrder.setEndTime(System.currentTimeMillis());
+            parkingOrder.setStatus(false);
+            return Optional.of(parkingOrderRepository.save(parkingOrder));
+        }
+        return Optional.empty();
     }
 }

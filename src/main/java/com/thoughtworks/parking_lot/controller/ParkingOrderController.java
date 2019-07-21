@@ -17,4 +17,11 @@ public class ParkingOrderController {
     public ParkingOrder parkCar(@PathVariable String parkingLotName, @RequestBody ParkingOrder parkingOrder) {
         return parkingOrderService.createOrder(parkingLotName, parkingOrder);
     }
+
+    @PutMapping(path = "/parkinglots/{parkingLotName}/parkingorders/{carNumber}")
+    public ResponseEntity<ParkingOrder> fetch(@PathVariable String parkingLotName, @PathVariable String carNumber) {
+        return parkingOrderService.fetchCar(parkingLotName, carNumber)
+                .map(parkingOrder -> ResponseEntity.status(HttpStatus.OK).body(parkingOrder))
+                .orElseGet(() -> ResponseEntity.badRequest().build());
+    }
 }
