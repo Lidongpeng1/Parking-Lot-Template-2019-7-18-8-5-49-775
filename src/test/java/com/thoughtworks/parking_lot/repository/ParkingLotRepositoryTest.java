@@ -47,4 +47,24 @@ class ParkingLotRepositoryTest {
         Assertions.assertEquals(parkingLot.getLocation(), createdParkingLot.getLocation());
         Assertions.assertFalse(result.isPresent());
     }
+
+    @Test
+    void should_return_all_parking_lot_pageable_by_page_and_page_size_normally() {
+        ParkingLot parkingLot = new ParkingLot();
+        parkingLot.setName("Hello");
+        parkingLot.setCapacity(1);
+        parkingLot.setLocation("World");
+        ParkingLot parkingLot2 = new ParkingLot();
+        parkingLot2.setName("Hello2");
+        parkingLot2.setCapacity(1);
+        parkingLot2.setLocation("World");
+        ParkingLot createdParkingLot = parkingLotRepository.save(parkingLot);
+        ParkingLot createdParkingLot2 = parkingLotRepository.save(parkingLot2);
+
+        List<ParkingLot> parkingLots = parkingLotRepository.findAllPageable(1, 1);
+
+        Assertions.assertNotNull(createdParkingLot);
+        Assertions.assertNotNull(createdParkingLot2);
+        Assertions.assertEquals(1, parkingLots.size());
+    }
 }
